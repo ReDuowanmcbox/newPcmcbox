@@ -1,0 +1,100 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <title>Re多玩我的世界盒子</title>
+</head>
+<body>
+  <script>
+  
+    const remote = require('electron').remote;
+    const shell = require('electron').shell;
+    var exec = require('child_process').exec;
+    var execPath = remote.process.execPath;
+    var command = execPath + ' path-to-your-app';
+
+    document.onclick = function(e) {
+      e.preventDefault();
+      if (e.target.tagName == 'A')
+        shell.openExternal(e.target.href);
+      return false;
+    };
+    document.ondragover = document.ondrop = function(e) {
+      e.preventDefault();
+      return false;
+    };
+    console.log("process.versions.electron:" + process.versions.electron);
+    require('electron').ipcRenderer.sendSync('zqz-show', 'TestIpcRenderer', 1);
+  </script>
+
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-12 column">
+        <ul class="nav nav-tabs">
+          <li class="active">
+             <a href="#">首页</a>
+          </li>
+          <li>
+             <a href="about.html">简介</a>
+          </li>
+          <li class="disabled">
+             <a href="#">信息</a>
+          </li>
+          <li class="dropdown pull-right">
+             <a href="#" data-toggle="dropdown" class="dropdown-toggle">下拉<strong class="caret"></strong></a>
+            <ul class="dropdown-menu">
+              <li>
+                 <a href="#">操作</a>
+              </li>
+              <li>
+                 <a href="#">设置栏目</a>
+              </li>
+              <li>
+                 <a href="#">更多设置</a>
+              </li>
+              <li class="divider">
+              </li>
+              <li>
+                 <a href="#">分割线</a>
+              </li>
+            </ul>
+          </li>
+        </ul><img alt="140x140" src="v3/default3.jpg" />
+        <h2>
+          Re多玩我的世界盒子
+        </h2>
+        <p>
+          Re多玩我的世界盒子是一个启动器 / 社区 / 联机平台. 版本:Beta1.0.0 测试版本<del>可能代表</del>不代表最终品质.
+        </p>
+        <p>
+          <button type="button" onclick="exec('start cmd')" class="btn btn-outline-secondary p-2">Dev Tools</button>
+          <button type="button" onclick="exec('python onlinebox.py')" class="btn btn-outline-secondary p-2">联机盒子</button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <script>
+    var holder = document.getElementById('holder');
+    holder.ondragover = function () {
+      this.className = 'hover';
+      return false;
+    };
+    holder.ondragleave = holder.ondragend = function () {
+      this.className = '';
+      return false;
+    };
+    holder.ondrop = function (e) {
+      this.className = '';
+      e.preventDefault();
+
+      var file = e.dataTransfer.files[0];
+      require('child_process').execFile(execPath, [file.path], {
+        detached: true, stdio: 'ignore'
+      }).unref();
+      return false;
+    };
+  </script>
+</body>
+</html>
